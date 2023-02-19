@@ -40,9 +40,6 @@ async function scrapePage() {
         const detalhesSpans = detalhesDiv.querySelectorAll('span');
         const detalhes = Array.from(detalhesSpans).map(span => span.textContent.trim()).join(', ');
         
-        // const detalhesDiv2 = document.querySelector('.sc-pxw7bz-0.ktssSw.Body');
-        // const detalhesSpans2 = detalhesDiv2.querySelectorAll('span');
-        // const detalhes2 = Array.from(detalhesSpans2).map(span => span.textContent.trim()).join(', ');
 
         const detailsSections = document.querySelectorAll('.sc-1gfn7xh-0.fxLMbR');
  
@@ -55,7 +52,7 @@ async function scrapePage() {
           details[sectionTitle] = sectionData;
         }
   
-        return { title, price, status, detalhes, detalhes2, details };
+        return { title, price, status, detalhes, details };
       });
   
       worksheet.addRow(propertyData);
