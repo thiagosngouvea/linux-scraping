@@ -31,7 +31,7 @@ async function scrapePage() {
   
       await newPage.waitForSelector('.sc-1oa9ufk-1.cmAgWZ');
   
-      const propertyData = await newPage.evaluate(() => {
+      const propertyData = await newPage.evaluate(async () => {
         const title = document.querySelector('.sc-de9h1g-0.cAbJFe').textContent.trim();
         const price = document.querySelector('.sc-3hj0n0-0.kPSlSy').textContent.trim().replace(/\/\s/g, '').replace(/VENDA|ALUGUEL/g, '').replace(/\s/g, '');
         const status = document.querySelector('.sc-1lj1a6-0.fgUzYm').textContent.trim().replace(/\/\s/g, '').replace(/\s/g, '');
@@ -39,7 +39,6 @@ async function scrapePage() {
         const detalhesDiv = document.querySelector('.sc-1alta1m-1.ecpoTK');
         const detalhesSpans = detalhesDiv.querySelectorAll('span');
         const detalhes = Array.from(detalhesSpans).map(span => span.textContent.trim()).join(', ');
-        
 
         const detailsSections = document.querySelectorAll('.sc-1gfn7xh-0.fxLMbR');
  
@@ -51,8 +50,12 @@ async function scrapePage() {
           const sectionData = Array.from(sectionSpans).map(span => span.textContent.trim()).join(', ');
           details[sectionTitle] = sectionData;
         }
-  
-        return { title, price, status, detalhes, details };
+
+        //pegar o link da imagem
+        // const image = document.querySelector('.sc-1alta1m-0.kqZQZ').src;
+        
+        return { title, price, status, detalhes, details};
+        
       });
   
       worksheet.addRow(propertyData);

@@ -7,10 +7,21 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const scrapePage = require('./scraping');
+const scrapePageOlx = require('./scraping-olx');
 
 app.get('/api/scrape', async (req, res) => {
   try {
     const data = await scrapePage();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error scraping page');
+  }
+});
+
+app.get('/api/scrape-olx', async (req, res) => {
+  try {
+    const data = await scrapePageOlx();
     res.json(data);
   } catch (error) {
     console.error(error);
