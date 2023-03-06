@@ -10,7 +10,7 @@ export function LayoutTheme({ children }) {
   } = theme.useToken();
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider
+      {/* <Sider
         breakpoint="lg"
         collapsedWidth="0"
         collapsible
@@ -36,7 +36,7 @@ export function LayoutTheme({ children }) {
             }),
           )}
         />
-      </Sider>
+      </Sider> */}
       <Layout>
         <Header
           style={{

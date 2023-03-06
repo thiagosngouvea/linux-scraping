@@ -19,10 +19,19 @@
     "exceljs": "^4.3.0",
     "export-from-json": "^1.7.2",
     "express": "^4.18.2",
+    "file-saver": "^2.0.5",
+    "image-size": "^1.0.2",
     "next": "13.1.6",
+    "path": "^0.12.7",
     "puppeteer": "^19.7.1",
     "react": "18.2.0",
+    "react-csv-reader": "^3.5.2",
     "react-dom": "18.2.0",
-    "selenium-webdriver": "^4.8.1"
+    "selenium-webdriver": "^4.8.1",
+    "xlsx": "^0.18.5",
+    "xlsx-style": "^0.8.13"
+  },
+  "devDependencies": {
+    "@vercel/node": "^2.9.8"
   }
 }
