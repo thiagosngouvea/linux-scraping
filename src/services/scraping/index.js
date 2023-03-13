@@ -9,3 +9,8 @@ export const getScrapingAmancio = async (page) => {
         const response = await axios.get(`https://www.imobiliariaamancio.com.br/api/listings?pagina=${page}`);
         return response;
 }
+
+export const getScrapingWhatsapp = async (data) => {
+        const response = await axios.post(`https://graph.whatsapp.com/graphql/catalog`, data);
+        return response;
+}

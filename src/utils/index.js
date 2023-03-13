@@ -6,5 +6,13 @@ export const SelectOptions = [
     {
         value: 'imobiliaria-amancio',
         label: 'Imobiliária Amancio',
+    },
+    {
+        value: 'alexandre-magno',
+        label: 'Corretor Alexandre Magno',
+    },
+    {
+        value: 'corretor-andre',
+        label: 'Corretor André',
     }
 ]
