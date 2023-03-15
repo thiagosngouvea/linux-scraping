@@ -20,18 +20,6 @@ export default function Home() {
   const [visible, setVisible] = useState(false)
   const [images, setImages] = useState([])
 
-  console.log('selectedSite', selectedSite)
-
-  const contentStyle = {
-    margin: 0,
-    height: '160px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
-  };
-
-
   const handleScraping = async () => {
     if (selectedSite === 'grego-imoveis') {
       setLoading(true)
@@ -120,7 +108,7 @@ export default function Home() {
       })
   }
 
-  const handleScrapingAlexandre = async () => {
+  const handleScrapingWhatsapp = async (jid) => {
     setLoading(true);
     const data = [];
     let after = "";
@@ -133,7 +121,7 @@ export default function Home() {
         "variables": {
             "request": {
                 "product_catalog": {
-                    "jid": "558195045212@c.us",
+                    "jid": jid,
                     "allow_shop_source": "ALLOWSHOPSOURCE_FALSE",
                     "width": "100",
                     "height": "100",
@@ -151,54 +139,30 @@ export default function Home() {
       after = responseData.paging.after;
     } while (after !== "");
   
+    let exportDados = []
+    for (const item of data) {
+      exportDados.push({
+        "Título": item.name,
+        "Preço": "R$" + Number(item.price).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        "Descrição": item.description ?? "Sem descrição",
+        "Fotos": item.media.images.map((item) => item.original_image_url),
+      })
+    }
+    setExportData(exportDados)
+    console.log(data)
+
     setDataWhatsapp(data);
     setLoading(false);
   }
-
-  const handleScrapingAndre = async () => {
-    setLoading(true);
-    const data = [];
-    let after = "";
-  
-    do {
-      const response = await getScrapingWhatsapp({
-        "access_token": "WA|787118555984857|7bb1544a3599aa180ac9a3f7688ba243",
-        "doc_id": "5456143974442934",
-        "variables": {
-          "request": {
-            "product_catalog": {
-              "jid": "558192966349@c.us",
-              "allow_shop_source": "ALLOWSHOPSOURCE_FALSE",
-              "width": "100",
-              "height": "100",
-              "limit": "10",
-              "after": after
-            }
-          }
-        },
-        "lang": "pt"
-      });
-  
-      const responseData = response.data.data.xwa_product_catalog_get_product_catalog.product_catalog;
-      data.push(...responseData.products);
-      after = responseData.paging.after;
-    } while (after !== "");
-  
-    setDataWhatsapp(data);
-    setLoading(false);
-  };
   
   
-  console.log('dataWhatsapp',dataWhatsapp)
   const handleButtonClick = () => {
     if (selectedSite === 'grego-imoveis') {
       handleScraping();
     } else if (selectedSite === 'imobiliaria-amancio') {
       handleScrapingAmancio();
-    } else if (selectedSite === 'alexandre-magno') {
-      handleScrapingAlexandre();
-    } else if (selectedSite === 'corretor-andre') {
-      handleScrapingAndre();
+    } else {
+      handleScrapingWhatsapp(selectedSite);
     }
   }
 

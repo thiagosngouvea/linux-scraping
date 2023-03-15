@@ -5,9 +5,10 @@ import { Table, Modal, Image, Button, Tooltip } from 'antd'
 
 export function TabelaWhatsapp({ data }) {
     const [images, setImages] = useState([])
-    const [descricao, setDescricao] = useState([])
+    const [descricao, setDescricao] = useState("")
     const [visible, setVisible] = useState(false)
     const [verMais, setVerMais] = useState(false)
+
     return (
       <>
         <Table
@@ -23,16 +24,18 @@ export function TabelaWhatsapp({ data }) {
                 dataIndex: "price",
                 key: "price",
                 render: (text) => {
-                    return text.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-                },
+                  return "R$" + Number(text).toLocaleString('pt-br', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                  });
+              },
             },
             {
                 title: "Descrição",
                 dataIndex: "description",
                 key: "description",
                 render: (text) => {
-                    setDescricao(text)
-                    return <Tooltip onClick={() => setVerMais(true)} title="Clique para ver mais">{text.substring(0, 100) + `...`}</Tooltip>;
+                    return <Tooltip onClick={() => {setDescricao(text),setVerMais(true)}} title="Clique para ver mais">{!text ? 'Sem descrição' : text.length > 100 ? text?.substring(0, 100) + `...` : text}</Tooltip>;
                 },
             },
             {
@@ -78,7 +81,7 @@ export function TabelaWhatsapp({ data }) {
       </Modal>
         <Modal
         title="Descrição Completa"
-        visible={verMais}
+        open={verMais}
         width={'80%'}
         onCancel={() => setVerMais(false)}
         centered
